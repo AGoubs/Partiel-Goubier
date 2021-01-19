@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.goubierarnaud.github.R
 import com.goubierarnaud.github.domain.model.UserRepos
 
-class RepoAdapter(context: Context) :
+class RepoAdapter(private val context: Context) :
     RecyclerView.Adapter<RepoAdapter.ViewHolder>() {
 
     private val usersRepos: ArrayList<UserRepos> = ArrayList()
@@ -48,11 +48,24 @@ class RepoAdapter(context: Context) :
 
         fun bind(userRepos: UserRepos) {
             name.text = userRepos.name
-            description.text = userRepos.description
-            language.text = userRepos.language
-            forks.text = userRepos.forks.toString()
-            watchers.text = userRepos.watchers.toString()
-            license.text = userRepos.license
+
+            description.text = userRepos.description?.let {
+                context.getString(R.string.description, it)
+            } ?: context.getString(R.string.no_description)
+
+            language.text = userRepos.language?.let {
+                context.getString(R.string.language, it)
+            } ?: context.getString(R.string.no_language)
+
+            forks.text = userRepos.forks.toString().let {
+                context.getString(R.string.forks, it)
+            }
+            watchers.text = userRepos.watchers.toString().let {
+                context.getString(R.string.watchers, it)
+            }
+            license.text = userRepos.license?.let {
+                context.getString(R.string.license, it)
+            } ?: context.getString(R.string.no_license)
         }
     }
 }

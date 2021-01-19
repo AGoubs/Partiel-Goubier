@@ -11,7 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_margin="16dp"
-        android:contentDescription="@string/description"
+        android:contentDescription="@string/image_description"
         android:scaleType="centerInside"
         android:src="@mipmap/ic_launcher_round" />
 

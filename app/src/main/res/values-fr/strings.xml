@@ -2,6 +2,17 @@
     <string name="app_name">Goubier</string>
     <string name="button">Rechercher</string>
     <string name="editText">Entrez votre texte</string>
-    <string name="description">Image</string>
+    <string name="image_description">Image</string>
     <string name="repos">Liste des repositories</string>
+    <string name="no_description">Pas de description</string>
+    <string name="description">Description : %s</string>
+    <string name="name">Nom : %s</string>
+    <string name="language">Langage : %s</string>
+    <string name="no_language">Pas de langage</string>
+    <string name="forks">Forks : %s</string>
+    <string name="no_forks">Pas de forks</string>
+    <string name="watchers">Watchers : %s</string>
+    <string name="no_watchers">Pas de watchers</string>
+    <string name="license">Licence : %s</string>
+    <string name="no_license">Pas de license</string>
 </resources>
