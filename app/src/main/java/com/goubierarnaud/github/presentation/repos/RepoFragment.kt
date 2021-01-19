@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.goubierarnaud.github.R
 import com.goubierarnaud.github.presentation.MainActivity
 
-class RepoFragment : Fragment() {
+class RepoFragment : Fragment(), RepoAdapter.OnFavoriteClickListener {
 
     private lateinit var nombre_repos: TextView
     private lateinit var progressBar: ProgressBar
@@ -51,7 +51,7 @@ class RepoFragment : Fragment() {
         progressBar = view.findViewById(R.id.progress_bar)
         recyclerView = view.findViewById(R.id.recycler_view)
 
-        adapter = RepoAdapter(requireContext())
+        adapter = RepoAdapter(requireContext(), this)
         recyclerView.adapter = adapter
 
         viewModel.state.observe(viewLifecycleOwner, ::updateState)
@@ -78,5 +78,9 @@ class RepoFragment : Fragment() {
                 adapter.setData(state.repos)
             }
         }
+    }
+
+    override fun OnFavoriteClick(id: Int) {
+        viewModel.addFavorite(id)
     }
 }

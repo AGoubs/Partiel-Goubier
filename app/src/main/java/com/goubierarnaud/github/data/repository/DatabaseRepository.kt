@@ -8,12 +8,12 @@ import com.goubierarnaud.github.domain.repository.FavoriteRepository
 
 class DatabaseRepository : FavoriteRepository {
     override suspend fun getFavorite(context: Context): List<Favorite> {
-        TODO("Not yet implemented")
+       return AppDatabase.getInstance(context)?.getFavoriteDao()?.getAllFavorite()?: emptyList()
     }
 
-    override suspend fun addFavorite(context: Context, userRepos: UserRepos) {
-        TODO("Not yet implemented")
+    override suspend fun addFavorite(context: Context, id: Int) {
+        AppDatabase.getInstance(context)?.getFavoriteDao()?.addFavorite(Favorite(id))
     }
 }
 
-fun UserRepos.toFavorite() = Favorite(this.id, this.name)
+

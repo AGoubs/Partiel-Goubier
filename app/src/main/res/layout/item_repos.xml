@@ -13,6 +13,7 @@
         android:padding="8dp">
 
         <ImageButton
+            android:id="@+id/favButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@android:drawable/star_big_off"

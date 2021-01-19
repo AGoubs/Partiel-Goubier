@@ -4,13 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.goubierarnaud.github.R
 import com.goubierarnaud.github.domain.model.UserRepos
 
-class RepoAdapter(private val context: Context) :
+class RepoAdapter(private val context: Context, val listener: OnFavoriteClickListener) :
     RecyclerView.Adapter<RepoAdapter.ViewHolder>() {
+
+    interface OnFavoriteClickListener {
+        fun OnFavoriteClick(id: Int)
+    }
 
     private val usersRepos: ArrayList<UserRepos> = ArrayList()
 
@@ -40,14 +45,28 @@ class RepoAdapter(private val context: Context) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val name: TextView = view.findViewById(R.id.name)
+        private val favButton: ImageButton = view.findViewById(R.id.favButton)
         private val description: TextView = view.findViewById(R.id.description)
         private val language: TextView = view.findViewById(R.id.language)
         private val forks: TextView = view.findViewById(R.id.forks)
         private val watchers: TextView = view.findViewById(R.id.watchers)
         private val license: TextView = view.findViewById(R.id.license)
 
+        init {
+            favButton.setOnClickListener {
+                listener.OnFavoriteClick(usersRepos[adapterPosition].id)
+            }
+        }
+
         fun bind(userRepos: UserRepos) {
             name.text = userRepos.name
+
+            if (userRepos.isFavorite == true) {
+                favButton.setImageDrawable(context.getDrawable(android.R.drawable.star_big_on))
+            } else {
+                favButton.setImageDrawable(context.getDrawable(android.R.drawable.star_big_off))
+
+            }
 
             description.text = userRepos.description?.let {
                 context.getString(R.string.description, it)

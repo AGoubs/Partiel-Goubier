@@ -1,6 +1,9 @@
 package com.goubierarnaud.github.data.repository
 
+import android.content.Context
 import com.goubierarnaud.github.data.api.GithubApi
+import com.goubierarnaud.github.data.database.AppDatabase
+import com.goubierarnaud.github.data.database.model.Favorite
 import com.goubierarnaud.github.data.model.GithubUserRepos
 import com.goubierarnaud.github.data.model.GithubUserShort
 import com.goubierarnaud.github.domain.model.UserRepos
@@ -11,7 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class GithubRepository : GithubRepository {
+class GithubRepository(private val context: Context) : GithubRepository {
 
     private val retrofit: Retrofit
 
@@ -38,8 +41,11 @@ class GithubRepository : GithubRepository {
     }
 
     override suspend fun getUserRepos(login: String): List<UserRepos> {
+        val favorites = AppDatabase.getInstance(context)?.getFavoriteDao()?.getAllFavorite()?: emptyList()
         return api.getUserRepos(login).map {
-            it.tuUserRepos()
+            it.tuUserRepos(favorites.find { favorite ->
+                it.id == favorite.id
+            })
         }
     }
 }
@@ -50,7 +56,7 @@ fun GithubUserShort.toUserShort() = UserShort(
     this.avatar
 )
 
-fun GithubUserRepos.tuUserRepos() = UserRepos(
+fun GithubUserRepos.tuUserRepos(isFavorite: Favorite?) = UserRepos(
     this.id,
     this.name,
     this.description,
@@ -58,4 +64,5 @@ fun GithubUserRepos.tuUserRepos() = UserRepos(
     this.forks,
     this.watchers,
     this.license?.name,
+    isFavorite != null
 )

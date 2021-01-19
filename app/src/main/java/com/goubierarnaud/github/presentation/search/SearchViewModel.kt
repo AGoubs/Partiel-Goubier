@@ -1,15 +1,13 @@
 package com.goubierarnaud.github.presentation.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.goubierarnaud.github.domain.repository.GithubRepository
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class SearchViewModel : ViewModel() {
-    private val repository: GithubRepository = com.goubierarnaud.github.data.repository.GithubRepository()
+class SearchViewModel(application: Application) : AndroidViewModel(application){
+    private val repository: GithubRepository = com.goubierarnaud.github.data.repository.GithubRepository(getApplication())
 
     private val _state = MutableLiveData<SearchState>()
     val state : LiveData<SearchState> get() = _state

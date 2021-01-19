@@ -8,4 +8,5 @@ data class UserRepos(
     val forks: Int,
     val watchers: Int,
     val license: String?,
+    val isFavorite: Boolean,
 )
