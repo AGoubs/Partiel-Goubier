@@ -1,13 +1,10 @@
-package com.goubierarnaud.github.presentation.search
+package com.goubierarnaud.github.presentation.repos
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,65 +12,74 @@ import androidx.recyclerview.widget.RecyclerView
 import com.goubierarnaud.github.R
 import com.goubierarnaud.github.presentation.MainActivity
 
-class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener {
+class RepoFragment : Fragment() {
 
-    private lateinit var button: Button
-    private lateinit var editText: EditText
+    private lateinit var name: TextView
+    private lateinit var description: TextView
+    private lateinit var language: TextView
+    private lateinit var fork: TextView
+    private lateinit var watchers: TextView
+    private lateinit var license: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: RepoViewModel by viewModels()
 
-    private lateinit var adapter: SearchAdapter
+    private lateinit var adapter: RepoAdapter
 
+    companion object {
+        private const val KEY_LOGIN = "key_login"
+
+        fun newInstance(login: String): RepoFragment {
+            val bundle = Bundle()
+            bundle.putString(KEY_LOGIN, login)
+
+            val fragment = RepoFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_user_search, container, false)
+        return inflater.inflate(R.layout.fragment_user_repos, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button = view.findViewById(R.id.button)
         progressBar = view.findViewById(R.id.progress_bar)
         recyclerView = view.findViewById(R.id.recycler_view)
 
-        adapter = SearchAdapter(requireContext(), this)
+        adapter = RepoAdapter(requireContext())
         recyclerView.adapter = adapter
 
-        button.setOnClickListener {
-            viewModel.searchUser(editText.text.toString())
-        }
-        editText = view.findViewById(R.id.editInput)
-
         viewModel.state.observe(viewLifecycleOwner, ::updateState)
+
+        arguments?.getString(KEY_LOGIN)?.let {
+            viewModel.getUserRepos(it)
+        }
     }
 
-    private fun updateState(state: SearchState) {
+    private fun updateState(state: RepoState) {
         when (state) {
-            is SearchState.ErrorState -> {
+            is RepoState.ErrorState -> {
                 progressBar.isVisible = false
                 Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
                 adapter.setData(null)
             }
-            is SearchState.LoadingState -> {
+            is RepoState.LoadingState -> {
                 progressBar.isVisible = true
                 adapter.setData(null)
             }
-            is SearchState.SuccessState -> {
+            is RepoState.SuccessState -> {
                 progressBar.isVisible = false
-                adapter.setData(state.users)
+                adapter.setData(state.repos)
             }
         }
-    }
-
-    override fun onSearchItemClick(login: String) {
-        val activity : MainActivity? = activity as? MainActivity
-
-        activity?.displayUserRepos(login)
     }
 }

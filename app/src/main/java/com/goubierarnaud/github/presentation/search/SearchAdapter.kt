@@ -11,8 +11,12 @@ import com.goubierarnaud.github.R
 import com.goubierarnaud.github.domain.model.UserShort
 import com.squareup.picasso.Picasso
 
-class SearchAdapter(context: Context) :
+class SearchAdapter(context: Context, val listener: OnSearchItemClickListener) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+
+    interface  OnSearchItemClickListener {
+        fun onSearchItemClick(login: String)
+    }
 
     private val users: ArrayList<UserShort> = ArrayList()
 
@@ -43,6 +47,12 @@ class SearchAdapter(context: Context) :
 
         private val login: TextView = view.findViewById(R.id.login)
         private val avatar: ImageView = view.findViewById(R.id.avatar)
+
+        init {
+            view.setOnClickListener {
+                listener.onSearchItemClick(users[adapterPosition].login)
+            }
+        }
 
         fun bind(userShort: UserShort) {
             login.text = userShort.login
