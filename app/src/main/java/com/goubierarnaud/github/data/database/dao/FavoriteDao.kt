@@ -6,6 +6,6 @@ import com.goubierarnaud.github.data.database.model.Favorite
 @Dao
 interface FavoriteDao {
     @Query("SELECT * FROM favorite")
-    suspend fun getAllBookmark(): List<Favorite>
+    suspend fun getFavorite(): List<Favorite>
 
 }

@@ -74,7 +74,7 @@ class RepoFragment : Fragment() {
             }
             is RepoState.SuccessState -> {
                 progressBar.isVisible = false
-                nombre_repos.text = state.repos.size.toString() + "Repositories"
+                nombre_repos.text = state.repos.size.toString() + " Repositories"
                 adapter.setData(state.repos)
             }
         }
