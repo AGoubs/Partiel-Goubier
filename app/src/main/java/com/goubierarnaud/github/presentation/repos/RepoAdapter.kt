@@ -14,7 +14,7 @@ class RepoAdapter(private val context: Context, val listener: OnFavoriteClickLis
     RecyclerView.Adapter<RepoAdapter.ViewHolder>() {
 
     interface OnFavoriteClickListener {
-        fun OnFavoriteClick(id: Int)
+        fun OnFavoriteClick(id: Int, favorite: Boolean)
     }
 
     private val usersRepos: ArrayList<UserRepos> = ArrayList()
@@ -54,7 +54,7 @@ class RepoAdapter(private val context: Context, val listener: OnFavoriteClickLis
 
         init {
             favButton.setOnClickListener {
-                listener.OnFavoriteClick(usersRepos[adapterPosition].id)
+                listener.OnFavoriteClick(usersRepos[adapterPosition].id, usersRepos[adapterPosition].isFavorite)
             }
         }
 
@@ -65,7 +65,6 @@ class RepoAdapter(private val context: Context, val listener: OnFavoriteClickLis
                 favButton.setImageDrawable(context.getDrawable(android.R.drawable.star_big_on))
             } else {
                 favButton.setImageDrawable(context.getDrawable(android.R.drawable.star_big_off))
-
             }
 
             description.text = userRepos.description?.let {

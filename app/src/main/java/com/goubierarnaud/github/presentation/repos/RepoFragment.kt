@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.goubierarnaud.github.R
-import com.goubierarnaud.github.presentation.MainActivity
 
 class RepoFragment : Fragment(), RepoAdapter.OnFavoriteClickListener {
 
@@ -80,7 +79,17 @@ class RepoFragment : Fragment(), RepoAdapter.OnFavoriteClickListener {
         }
     }
 
-    override fun OnFavoriteClick(id: Int) {
-        viewModel.addFavorite(id)
+    override fun OnFavoriteClick(id: Int, favorite: Boolean) {
+        if (favorite) {
+            viewModel.deleteFavorite(id)
+            arguments?.getString(KEY_LOGIN)?.let {
+                viewModel.getUserRepos(it)
+            }
+        } else {
+            viewModel.addFavorite(id)
+            arguments?.getString(KEY_LOGIN)?.let {
+                viewModel.getUserRepos(it)
+            }
+        }
     }
 }

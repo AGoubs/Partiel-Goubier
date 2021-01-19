@@ -36,4 +36,10 @@ class RepoViewModel(application: Application) : AndroidViewModel(application) {
             repositoryFavorite.addFavorite(getApplication(), id)
         }
     }
+
+    fun deleteFavorite(id: Int) {
+        viewModelScope.launch {
+            repositoryFavorite.deleteFavorite(getApplication(), id)
+        }
+    }
 }

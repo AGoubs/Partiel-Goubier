@@ -9,4 +9,6 @@ interface FavoriteRepository {
     suspend fun getFavorite(context: Context): List<Favorite>
 
     suspend fun addFavorite(context: Context, id: Int)
+
+    suspend fun deleteFavorite(context: Context, id: Int)
 }

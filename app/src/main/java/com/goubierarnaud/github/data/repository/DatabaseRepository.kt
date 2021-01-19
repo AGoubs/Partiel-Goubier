@@ -14,6 +14,9 @@ class DatabaseRepository : FavoriteRepository {
     override suspend fun addFavorite(context: Context, id: Int) {
         AppDatabase.getInstance(context)?.getFavoriteDao()?.addFavorite(Favorite(id))
     }
+    override suspend fun deleteFavorite(context: Context, id: Int) {
+        AppDatabase.getInstance(context)?.getFavoriteDao()?.deleteFavorite(Favorite(id))
+    }
 }
 
 
