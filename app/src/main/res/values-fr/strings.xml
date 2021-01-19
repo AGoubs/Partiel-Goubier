@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Goubier</string>
+    <string name="button">Rechercher</string>
+    <string name="editText">Entrez votre texte</string>
+    <string name="description">Image</string>
+    <string name="repos">Liste des repositories</string>
+</resources>
