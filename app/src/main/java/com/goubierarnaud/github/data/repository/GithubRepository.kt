@@ -20,7 +20,7 @@ class GithubRepository : GithubRepository {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
             .addInterceptor(logging)
-            .build();
+            .build()
 
         retrofit = Retrofit.Builder()
             .baseUrl(GithubApi.BASE_URL)
@@ -28,8 +28,6 @@ class GithubRepository : GithubRepository {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-
 
     private val api = retrofit.create(GithubApi::class.java)
 
