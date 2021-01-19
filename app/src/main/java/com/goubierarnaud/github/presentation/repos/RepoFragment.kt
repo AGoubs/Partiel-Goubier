@@ -14,12 +14,7 @@ import com.goubierarnaud.github.presentation.MainActivity
 
 class RepoFragment : Fragment() {
 
-    private lateinit var name: TextView
-    private lateinit var description: TextView
-    private lateinit var language: TextView
-    private lateinit var fork: TextView
-    private lateinit var watchers: TextView
-    private lateinit var license: TextView
+    private lateinit var nombre_repos: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
 
@@ -52,6 +47,7 @@ class RepoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        nombre_repos = view.findViewById(R.id.nombre_repos)
         progressBar = view.findViewById(R.id.progress_bar)
         recyclerView = view.findViewById(R.id.recycler_view)
 
@@ -78,6 +74,7 @@ class RepoFragment : Fragment() {
             }
             is RepoState.SuccessState -> {
                 progressBar.isVisible = false
+                nombre_repos.text = state.repos.size.toString() + "Repositories"
                 adapter.setData(state.repos)
             }
         }

@@ -17,7 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            android:text="test"
+            android:background="@drawable/background"
+            />
 
         <TextView
             android:id="@+id/description"

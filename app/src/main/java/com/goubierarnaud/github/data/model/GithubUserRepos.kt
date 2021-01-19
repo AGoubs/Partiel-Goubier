@@ -10,7 +10,7 @@ data class GithubUserRepos(
     @SerializedName("description")
     val description: String?,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("forks")
     val forks: Int,
     @SerializedName("watchers")
